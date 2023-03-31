@@ -149,7 +149,7 @@ app.put("/districts/:districtId/", async (request, response) => {
 });
 
 //API_7
-app.put("/states/:stateId/stats/", async (request, response) => {
+app.get("/states/:stateId/stats/", async (request, response) => {
   const { stateId } = request.params;
 
   const sqlQuery = `
@@ -162,7 +162,7 @@ app.put("/states/:stateId/stats/", async (request, response) => {
         WHERE 
             state_id = ${stateId};`;
 
-  const reqData = await db.run(sqlQuery);
+  const reqData = await db.get(sqlQuery);
   response.send(reqData);
 });
 
