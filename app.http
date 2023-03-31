@@ -46,7 +46,7 @@ Content-Type : application/json
 ###
 
 //API_7
-GET http://localhost:3000/states/12/stats/
+GET http://localhost:3000/states/5/stats/
 
 ###
 

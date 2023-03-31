@@ -106,10 +106,9 @@ app.get("/districts/:districtId/", async (request, response) => {
         FROM district
         WHERE district_id = ${districtId};`;
 
-  const reqData = await db.all(sqlQuery);
-  const reqDataFormat = reqData.map((eachObject) =>
-    districtTableConversion(eachObject)
-  );
+  const reqData = await db.get(sqlQuery);
+  const reqDataFormat = districtTableConversion(reqData);
+
   response.send(reqDataFormat);
 });
 
