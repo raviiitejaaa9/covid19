@@ -108,7 +108,6 @@ app.get("/districts/:districtId/", async (request, response) => {
 
   const reqData = await db.get(sqlQuery);
   const reqDataFormat = districtTableConversion(reqData);
-
   response.send(reqDataFormat);
 });
 
@@ -129,19 +128,21 @@ app.delete("/districts/:districtId/", async (request, response) => {
 
 app.put("/districts/:districtId/", async (request, response) => {
   const { districtId } = request.params;
+  console.log(districtId);
   const { districtName, stateId, cases, cured, active, deaths } = request.body;
+  console.log(districtName, stateId);
 
   const sqlQuery = `
         UPDATE district
         SET 
             district_name = '${districtName}',
-            stateId = ${stateId},
+            state_id = ${stateId},
             cases = ${cases},
             cured = ${cured},
             active = ${active},
             deaths = ${deaths}
         WHERE 
-            district_id = ${districtId}; `;
+            district_id = ${districtId};`;
 
   const reqData = await db.run(sqlQuery);
   response.send("District Details Updated");
@@ -150,13 +151,14 @@ app.put("/districts/:districtId/", async (request, response) => {
 //API_7
 app.get("/states/:stateId/stats/", async (request, response) => {
   const { stateId } = request.params;
+  console.log(stateId);
 
   const sqlQuery = `
         SELECT 
-            SUM(cases) AS totalCases,
-            SUM(cured) AS totalCured,
-            SUM(active) AS totalActive,
-            SUM(deaths) AS totalDeaths
+            sum(cases) AS totalCases,
+            sum(cured) AS totalCured,
+            sum(active) AS totalActive,
+            sum(deaths) AS totalDeaths
         FROM district 
         WHERE 
             state_id = ${stateId};`;
