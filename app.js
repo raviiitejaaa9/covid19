@@ -154,16 +154,16 @@ app.put("/states/:stateId/stats/", async (request, response) => {
 
   const sqlQuery = `
         SELECT 
-            sum(cases) AS totalCases,
-            sum(cured) AS totalCured,
-            sum(active) AS totalActive,
-            sum(deaths) AS totalDeaths
+            SUM(cases) AS totalCases,
+            SUM(cured) AS totalCured,
+            SUM(active) AS totalActive,
+            SUM(deaths) AS totalDeaths
         FROM district 
         WHERE 
             state_id = ${stateId};`;
 
   const reqData = await db.run(sqlQuery);
-  response.send("District Details Updated");
+  response.send(reqData);
 });
 
 //API_8
